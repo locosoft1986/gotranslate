@@ -24,16 +24,14 @@ func (self *StaticFileLoader) FindFilePath(langName string) string {
 
 	retFileName := langName
 
-	switch self.options.(Type) {
+	switch self.options.(type) {
 	case StaticFileOption://single option
 		option := self.options.(StaticFileOption)
 		retFileName = option.prefix + langName + option.suffix
 
 
 	case []StaticFileOption://multiple options
-		for opt := range self.options  {
-			option := opt.(StaticFileOption)
-
+		for _, option := range self.options.([]StaticFileOption)  {
 			tmpFullPath := option.prefix + langName + option.suffix
 
 			if _,err := os.Stat(tmpFullPath); err == nil {
