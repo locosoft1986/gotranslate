@@ -20,14 +20,16 @@ func (self *StaticFileLoader) Config(options interface{}) {
 	self.options = options;
 }
 
-func (self *StaticFileLoader) FindFilePath(langName string) string {
+func (self *StaticFileLoader) FindFilePath(langName string) (string, bool) {
 
-	retFileName := langName
+	var retFileName string
+	retStatus := false
 
 	switch self.options.(type) {
 	case StaticFileOption://single option
 		option := self.options.(StaticFileOption)
 		retFileName = option.prefix + langName + option.suffix
+		retStatus = true
 
 
 	case []StaticFileOption://multiple options
@@ -36,19 +38,27 @@ func (self *StaticFileLoader) FindFilePath(langName string) string {
 
 			if _,err := os.Stat(tmpFullPath); err == nil {
 				retFileName = tmpFullPath
+				retStatus = true
 				break
 			}
 		}
+	default:
+		retStatus = false
 
 	}
 
 
 
-	return retFileName
+	return retFileName, retStatus
 }
 
 func (self *StaticFileLoader) LoadLanguage(langName string) (map[string]interface{}, bool) {
-	filename := self.FindFilePath(langName)
+	filename, status := self.FindFilePath(langName)
+
+	if !status {
+		fmt.Println("ERROR: Localization name " + langName + " not found when loading json file")
+		return nil, false
+	}
 
 	content, err := ioutil.ReadFile(filename)
 
