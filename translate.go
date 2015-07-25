@@ -10,28 +10,47 @@ type transLoaderBase interface {
 	LoadLanguage(langUrl string) (map[string]interface{}, bool)
 }
 
-type localLangStore struct {
-	defaultLang string
-	currentLang string
-	loader 		transLoaderBase
-	langNames []string
-	localMap map[string]localization
+type translateStore struct {
+	currentLang 		string
+	fullbackLang 		string
+	loader 				*transLoaderBase
+	langNames 			[]string
+	locales 			map[string]*localization
 }
 
-func (self *localLangStore) Add(langName string, locale localization) {
+var tranlates = &translateStore{locales: make(map[string]*localization))}
+
+func (self *translateStore) Add(langName string, locale localization) {
 
 }
 
-func (self *localLangStore) Get(key string, loader transLoaderBase)(string, bool) {
+func (self *translateStore) Get(key string, loader transLoaderBase)(string, bool) {
 
 	return "", false;
 }
 
 func UseStaticFileLoader(option interface{}) {
-
+	UseLoader(new(StaticFileLoader), option)
 }
 
 func UseLoader(loader transLoaderBase, option interface{}) {
+	tranlates.loader = &loader
+	(*tranlates.loader).Config(option)
+}
+
+func Use(langName string) {
+
+}
+
+func PreferredLanguage(langName string) {
+
+}
+
+func FallbackLanguage(langName string) {
+
+}
+
+func Reload(langName string) {
 
 }
 
