@@ -3,5 +3,6 @@
   "username" : {
     "FIRSTNAME": "First Name",
     "LASTNAME": "Last Name"
-  }
+  },
+  "ParamTest": "Anther param value is %d"
 }
