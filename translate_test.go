@@ -66,3 +66,33 @@ func TestDiveGivenKeysAndJsonMapData(t *testing.T) {
 	}
 
 }
+
+func TestTRFunctionGivenStaticLoaderSingleOptionAndKey(t *testing.T) {
+	UseStaticFileLoader(StaticFileOption{"testdata/testdir/locale_", ".json"})
+	Use("en-US")
+	firstName := TR("username.FIRSTNAME")
+	lastName := TR("username.LASTNAME")
+	title := TR("title")
+	paramTest := TR("username.ParamTest", 20)
+
+	EXPECT_FIRSTNAME := "First Name"
+	EXPECT_LASTNAME := "Last Name"
+	EXPECT_TITLE := "This is a test title"
+	EXPECT_PARAMTEST := "Param value is 20"
+
+	if firstName != EXPECT_FIRSTNAME {
+		t.Error("First name is not equal to expected value.")
+	}
+
+	if lastName != EXPECT_LASTNAME {
+		t.Error("last name is not equal to expected value.")
+	}
+
+	if title != EXPECT_TITLE {
+		t.Error("Title is not equal to expected value.")
+	}
+
+	if paramTest != EXPECT_PARAMTEST {
+		t.Error("Param test is not equal to expected value.")
+	}
+}
