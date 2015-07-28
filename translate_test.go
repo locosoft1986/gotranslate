@@ -67,7 +67,7 @@ func TestDiveGivenKeysAndJsonMapData(t *testing.T) {
 
 }
 
-func TestTRFunctionGivenStaticLoaderSingleOptionAndKey(t *testing.T) {
+func TestTRGivenStaticLoaderSingleOptionAndKey(t *testing.T) {
 	UseStaticFileLoader(StaticFileOption{"testdata/testdir/locale_", ".json"})
 	Use("en-US")
 	firstName := TR("username.FIRSTNAME")
@@ -95,4 +95,24 @@ func TestTRFunctionGivenStaticLoaderSingleOptionAndKey(t *testing.T) {
 	if paramTest != EXPECT_PARAMTEST {
 		t.Error("Param test is not equal to expected value.")
 	}
+}
+
+func BenchmarkTRGivenKey(b *testing.B) {
+	UseStaticFileLoader(StaticFileOption{"testdata/testdir/locale_", ".json"})
+	Use("en-US")
+
+	for i := 0; i < b.N; i++ {
+		TR("username.LASTNAME")
+	}
+
+}
+
+func BenchmarkTRGivenKeyWithFormat(b *testing.B) {
+	UseStaticFileLoader(StaticFileOption{"testdata/testdir/locale_", ".json"})
+	Use("en-US")
+
+	for i := 0; i < b.N; i++ {
+		TR("username.ParamTest", 20)
+	}
+
 }
