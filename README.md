@@ -88,5 +88,11 @@ The above code will load the local-en-UK.test.json file in the "testdata/other" 
 
 #TODO
  1.Default Url Loader: It can fetch the json file from an URL addresses
- 2.Ini file Loader: It can load the ini file and support the ini section as a dotted string key. For example, if user want to fetch the key "name" in the section "test", user can use "test.name" as a localization key.
+ 
+ 
+ 2.Ini file Loader: It can load the ini file and support the ini section as a dotted string key. 
+ 
+ For example, if user want to fetch the key "name" in the section "test", user can use "test.name" as a localization key.
+ 
+ 
  3.Partial Loader: If the localization file is too large, user can split it into different parts and load the different parts in different situations
